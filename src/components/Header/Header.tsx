@@ -195,7 +195,13 @@ export function Header()
                   onClick={() => setPanel("menu")}
                 >
                   <span className="site-header__menu-label">Menu</span>
-                  <Icon name="menu" size={20} />
+                  <span className="site-header__menu-orb" aria-hidden="true">
+                    <span className="site-header__menu-dot" />
+                    <span className="site-header__menu-lines">
+                      <span className="site-header__menu-line" />
+                      <span className="site-header__menu-line" />
+                    </span>
+                  </span>
                 </button>
               </div>
             </div>

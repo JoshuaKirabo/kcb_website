@@ -329,13 +329,14 @@
       transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
    }
 
+/* Ivory pill with a tiny oxblood orb that swells into a hamburger on hover (Akaru-style). */
 .site-header__menu-button
    {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       height: 48px;
-      padding: 0 23px;
+      padding: 0 8px 0 20px;
       font-family: inherit;
       font-size: 16px;
       font-weight: 500;
@@ -346,6 +347,62 @@
       border-radius: 9999px;
       cursor: pointer;
       transition: background-color 200ms ease, transform 160ms var(--ease-out);
+   }
+
+.site-header__menu-label
+   {
+      display: block;
+      transition: transform 400ms var(--ease-in-out);
+   }
+
+.site-header__menu-orb
+   {
+      position: relative;
+      display: block;
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 100%;
+   }
+
+.site-header__menu-dot
+   {
+      position: absolute;
+      inset: 0;
+      background: var(--header-field);
+      border-radius: 100%;
+      transform: scale(.2);
+      transition: transform 400ms var(--ease-out);
+   }
+
+.site-header__menu-lines
+   {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+   }
+
+.site-header__menu-line
+   {
+      position: absolute;
+      left: 50%;
+      width: 14px;
+      height: 2px;
+      margin-left: -7px;
+      background: var(--header-ivory);
+      border-radius: 9999px;
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 200ms ease, transform 200ms var(--ease-out);
+   }
+
+.site-header__menu-line:nth-child(2)
+   {
+      transform: translateY(36px);
    }
 
 .site-header__search:active, .site-header__menu-button:active
@@ -391,6 +448,33 @@
       .site-header__menu-button:hover
          {
             background: var(--header-ivory-hover);
+         }
+
+      /* Dot fills the orb, lines rise into place, label eases left — enter slower than leave. */
+      .site-header__menu-button:hover .site-header__menu-label
+         {
+            transform: translateX(-8px);
+            transition: transform 500ms var(--ease-in-out);
+         }
+
+      .site-header__menu-button:hover .site-header__menu-dot
+         {
+            transform: scale(1);
+            transition: transform 500ms var(--ease-in-out);
+         }
+
+      .site-header__menu-button:hover .site-header__menu-line:nth-child(1)
+         {
+            opacity: 1;
+            transform: translateY(-2px);
+            transition: opacity 500ms ease, transform 500ms var(--ease-out);
+         }
+
+      .site-header__menu-button:hover .site-header__menu-line:nth-child(2)
+         {
+            opacity: 1;
+            transform: translateY(2px);
+            transition: opacity 500ms ease 50ms, transform 500ms var(--ease-out) 50ms;
          }
    }
 
@@ -839,7 +923,7 @@
             margin: 0 8px 0 0;
          }
 
-      /* Menu turns into a round icon button here, like the original. */
+      /* Menu turns into a round icon button here — orb only, same hover grow. */
       .site-header__menu-button
          {
             justify-content: center;
@@ -855,6 +939,18 @@
             height: 1px;
             overflow: hidden;
             clip-path: inset(50%);
+         }
+
+      .site-header__menu-orb
+         {
+            width: 28px;
+            height: 28px;
+         }
+
+      .site-header__menu-line
+         {
+            width: 12px;
+            margin-left: -6px;
          }
 
       .site-menu__top
@@ -1006,6 +1102,32 @@
       .site-header__search:active, .site-header__menu-button:active, .site-search__close:active, .site-menu__close:active
          {
             transform: none;
+         }
+
+      /* Keep the filled orb so the control still reads as a button; drop the grow and slide. */
+      .site-header__menu-label, .site-header__menu-dot, .site-header__menu-line
+         {
+            transition: none;
+         }
+
+      .site-header__menu-dot
+         {
+            transform: scale(1);
+         }
+
+      .site-header__menu-line
+         {
+            opacity: 1;
+         }
+
+      .site-header__menu-line:nth-child(1)
+         {
+            transform: translateY(-2px);
+         }
+
+      .site-header__menu-line:nth-child(2)
+         {
+            transform: translateY(2px);
          }
    }
 

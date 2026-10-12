@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useReveal } from "../../hooks/useReveal";
 import assembly from "../../assets/budo/assembly.jpeg";
 import dance from "../../assets/budo/dance.jpeg";
 import awardChaplain from "../../assets/budo/award-chaplain.jpeg";
@@ -21,33 +22,6 @@ const SLIDES: Photo[] =
 
 const AUTOPLAY_MS = 6000;
 const SLIDE_MS = 500;
-
-// Same as the original's WOW fade-up: each block rises in once it scrolls into view.
-function useReveal<T extends HTMLElement>()
-  {
-    const ref = useRef<T>(null);
-    const [shown, setShown] = useState(false);
-
-    useEffect(() =>
-      {
-        const node = ref.current;
-        if(!node) return;
-
-        const observer = new IntersectionObserver(([entry]) =>
-          {
-            if(entry.isIntersecting)
-              {
-                setShown(true);
-                observer.disconnect();
-              }
-          }, { threshold: 0.15 });
-
-        observer.observe(node);
-        return () => observer.disconnect();
-      }, []);
-
-    return [ref, shown ? " is-revealed" : ""] as const;
-  }
 
 export function About()
   {
