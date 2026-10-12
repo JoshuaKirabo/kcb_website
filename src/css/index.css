@@ -1,0 +1,108 @@
+:root
+   {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+
+      /* Budo's palette, all pulled from the red lion. The lion's own red (#fa0100) stays on the lion, so it never sits on itself. Ivory is the crest's white, standing in where Overlake used gold. */
+      --budo-lion: #fa0100;
+      --budo-oxblood: #6a0b14;
+      --budo-oxblood-raised: #7a0e18;
+      --budo-oxblood-sunk: #4a0710;
+      --budo-oxblood-deep: #3d050b;
+      --budo-ink: #b0101c;
+      --budo-line: #8a2a33;
+      --budo-rose: #d08a8d;
+      --budo-blush: #f1c8c3;
+      --budo-blush-pale: #f6dfdb;
+      --budo-ivory: #fbf6ef;
+      --budo-ivory-hover: #ffffff;
+
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+      --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+      --topbar-h: 41px;
+      --navbar-h: 90px;
+      --header-h: calc(var(--topbar-h) + var(--navbar-h));
+      --gutter: 24px;
+   }
+
+@media (max-width: 1199.98px)
+   {
+      :root
+         {
+            --navbar-h: 72px;
+         }
+   }
+
+@media (max-width: 767.98px)
+   {
+      :root
+         {
+            --gutter: 16px;
+         }
+   }
+
+body
+   {
+      margin: 0;
+      background: var(--budo-oxblood);
+   }
+
+/* Same widths as the Bootstrap container the original sits in. Header and hero both line up on it. */
+.container
+   {
+      box-sizing: border-box;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+   }
+
+@media (min-width: 576px)
+   {
+      .container
+         {
+            max-width: 540px;
+         }
+   }
+
+@media (min-width: 768px)
+   {
+      .container
+         {
+            max-width: 720px;
+         }
+   }
+
+@media (min-width: 992px)
+   {
+      .container
+         {
+            max-width: 960px;
+         }
+   }
+
+@media (min-width: 1200px)
+   {
+      .container
+         {
+            max-width: 1180px;
+         }
+   }
+
+@media (min-width: 1400px)
+   {
+      .container
+         {
+            max-width: 1368px;
+         }
+   }
+
+/* The header is fixed, so the page starts below it. */
+.site-main
+   {
+      padding-top: var(--header-h);
+   }

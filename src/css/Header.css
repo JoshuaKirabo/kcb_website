@@ -1,0 +1,1039 @@
+/* Fixed header: a dark quick-links strip, then the logo, main nav, search and Menu button. Plus the search sheet and full-screen menu it opens. */
+
+.site-header, .site-search, .site-menu
+   {
+      --header-field: var(--budo-oxblood);
+      --header-deep: var(--budo-oxblood-deep);
+      --header-panel: var(--budo-oxblood-raised);
+      --header-sunk: var(--budo-oxblood-sunk);
+      --header-ivory: var(--budo-ivory);
+      --header-ivory-hover: var(--budo-ivory-hover);
+      --header-blush: var(--budo-blush);
+   }
+
+.site-header *, .site-header *::before, .site-header *::after,
+.site-search *, .site-search *::before, .site-search *::after,
+.site-menu *, .site-menu *::before, .site-menu *::after
+   {
+      box-sizing: border-box;
+   }
+
+.site-header a:focus-visible, .site-header button:focus-visible,
+.site-search button:focus-visible,
+.site-menu a:focus-visible, .site-menu button:focus-visible
+   {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+   }
+
+.visually-hidden
+   {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+   }
+
+.icon
+   {
+      display: block;
+      flex-shrink: 0;
+   }
+
+/* ===== Header shell ===== */
+
+/* Sliding the whole header up by the strip's height instead of collapsing it, so nothing reflows mid-scroll. */
+.site-header
+   {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1030;
+      background: var(--header-field);
+      transition: transform 300ms var(--ease-in-out);
+   }
+
+.site-header.is-topbar-hidden
+   {
+      transform: translateY(calc(-1 * var(--topbar-h)));
+   }
+
+/* ===== Quick-links strip ===== */
+
+.site-header__topbar
+   {
+      height: var(--topbar-h);
+      background: var(--header-deep);
+   }
+
+.site-header__topbar .container
+   {
+      height: 100%;
+   }
+
+.site-header__quick-links
+   {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 40px;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+   }
+
+.site-header__quick-links a
+   {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 16px;
+      line-height: 21px;
+      color: rgba(255, 255, 255, .7);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 1px solid transparent;
+      transition: color 150ms ease, border-color 150ms ease;
+   }
+
+/* ===== Main bar ===== */
+
+.site-header__bar
+   {
+      height: var(--navbar-h);
+   }
+
+.site-header__row
+   {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      height: 100%;
+   }
+
+/* Red lion on the left, the school name and founding year stacked beside it. */
+.brand
+   {
+      --lion-h: 56px;
+
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      color: #fff;
+      text-decoration: none;
+   }
+
+.brand__lion
+   {
+      display: block;
+      flex-shrink: 0;
+      width: auto;
+      height: var(--lion-h);
+   }
+
+.brand__text
+   {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 0;
+   }
+
+.brand__name
+   {
+      font-family: 'Besley', serif;
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -.01em;
+   }
+
+/* No rule between them anymore, so the year sits close under the name to keep the two reading as one. */
+.brand__est
+   {
+      margin-top: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--header-blush);
+   }
+
+.site-header__actions
+   {
+      display: flex;
+      align-items: center;
+   }
+
+.site-header__nav > ul
+   {
+      display: flex;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+   }
+
+.site-header__nav-item
+   {
+      position: relative;
+      margin: 0 20px;
+   }
+
+.site-header__nav-item:first-child
+   {
+      margin-left: 0;
+   }
+
+.site-header__nav-link
+   {
+      position: relative;
+      display: block;
+      padding: 12px 0;
+      font-size: 18px;
+      line-height: 27px;
+      color: #fff;
+      text-decoration: none;
+   }
+
+/* The underline draws in from the left when you hover or tab onto the item. */
+.site-header__nav-link::after
+   {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 13px;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 250ms var(--ease-out);
+   }
+
+.site-header__nav-item:has(:focus-visible) .site-header__nav-link::after
+   {
+      transform: scaleX(1);
+   }
+
+/* ===== Dropdowns ===== */
+
+/* Rises a little into place under its link, then sinks back the same way when you leave. */
+.site-header__dropdown
+   {
+      position: absolute;
+      top: 100%;
+      left: -33px;
+      z-index: 1;
+      width: max-content;
+      min-width: 240px;
+      margin: 0;
+      padding: 32px;
+      list-style: none;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 24px 30px 0 rgba(0, 0, 0, .06);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(28px);
+      transform-origin: top left;
+      transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s linear 200ms;
+   }
+
+/* Bridging the gap under the link so the mouse can travel down without the panel closing. */
+.site-header__dropdown::before
+   {
+      content: "";
+      position: absolute;
+      top: -15px;
+      left: 0;
+      right: 0;
+      height: 15px;
+   }
+
+.site-header__nav-item:has(:focus-visible) .site-header__dropdown
+   {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(12px);
+      transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s;
+   }
+
+.site-header__dropdown li
+   {
+      margin: 0 0 12px;
+      line-height: 0;
+   }
+
+.site-header__dropdown li:last-child
+   {
+      margin: 0;
+   }
+
+.site-header__dropdown a
+   {
+      display: inline-block;
+      font-size: 16px;
+      line-height: 23px;
+      color: var(--budo-ink);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 150ms ease, border-color 150ms ease;
+   }
+
+.site-header__dropdown a:focus-visible
+   {
+      outline-color: var(--budo-ink);
+   }
+
+/* ===== Search + Menu buttons ===== */
+
+.site-header__search
+   {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      margin: 0 12px 0 20px;
+      padding: 0;
+      color: #fff;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, .25);
+      border-radius: 100px;
+      cursor: pointer;
+      transition: transform 160ms var(--ease-out);
+   }
+
+/* A soft halo that swells out around the circle on hover. */
+.site-header__search::after
+   {
+      content: "";
+      position: absolute;
+      inset: -7px;
+      border: 6px solid rgba(255, 255, 255, .1);
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      transform: scale(.85);
+      transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
+   }
+
+.site-header__menu-button
+   {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 48px;
+      padding: 0 23px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1;
+      color: var(--header-field);
+      background: var(--header-ivory);
+      border: 1px solid var(--header-ivory);
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: background-color 200ms ease, transform 160ms var(--ease-out);
+   }
+
+.site-header__search:active, .site-header__menu-button:active
+   {
+      transform: scale(.97);
+   }
+
+/* ===== Hover (mouse only, so a tap on touch doesn't leave things stuck open) ===== */
+
+@media (hover: hover) and (pointer: fine)
+   {
+      .site-header__quick-links a:hover
+         {
+            color: #fff;
+            border-bottom-color: #fff;
+         }
+
+      .site-header__nav-item:hover .site-header__nav-link::after
+         {
+            transform: scaleX(1);
+         }
+
+      .site-header__nav-item:hover .site-header__dropdown
+         {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(12px);
+            transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s;
+         }
+
+      .site-header__dropdown a:hover
+         {
+            color: #757368;
+            border-bottom-color: #757368;
+         }
+
+      .site-header__search:hover::after
+         {
+            opacity: 1;
+            transform: scale(1);
+         }
+
+      .site-header__menu-button:hover
+         {
+            background: var(--header-ivory-hover);
+         }
+   }
+
+/* ===== Search sheet ===== */
+
+.site-search
+   {
+      position: fixed;
+      inset: 0;
+      z-index: 1040;
+      visibility: hidden;
+      transition: visibility 0s linear 400ms;
+   }
+
+.site-search.is-open
+   {
+      visibility: visible;
+      transition: visibility 0s;
+   }
+
+.site-search__backdrop
+   {
+      position: absolute;
+      inset: 0;
+      background: rgba(30, 2, 6, .55);
+      opacity: 0;
+      transition: opacity 250ms var(--ease-out);
+   }
+
+.site-search.is-open .site-search__backdrop
+   {
+      opacity: 1;
+   }
+
+/* Drops down from the top edge and goes back up the same way. */
+.site-search__sheet
+   {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 40px 0;
+      background: var(--header-panel);
+      transform: translateY(-100%);
+      transition: transform 400ms var(--ease-drawer);
+   }
+
+.site-search.is-open .site-search__sheet
+   {
+      transform: translateY(0);
+   }
+
+.site-search__form
+   {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: #fff;
+   }
+
+.site-search__form input
+   {
+      flex: 1;
+      min-width: 0;
+      padding: 12px 0;
+      font-family: 'Besley', serif;
+      font-size: clamp(22px, calc(18px + 1.2vw), 36px);
+      color: #fff;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .35);
+      border-radius: 0;
+      outline: none;
+      transition: border-color 200ms ease;
+   }
+
+.site-search__form input::placeholder
+   {
+      color: rgba(255, 255, 255, .5);
+   }
+
+.site-search__form input:focus
+   {
+      border-bottom-color: var(--header-ivory);
+   }
+
+.site-search__close
+   {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      color: #fff;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, .25);
+      border-radius: 100px;
+      cursor: pointer;
+      transition: transform 160ms var(--ease-out);
+   }
+
+.site-search__close:active
+   {
+      transform: scale(.97);
+   }
+
+/* ===== Full-screen menu ===== */
+
+.site-menu
+   {
+      position: fixed;
+      inset: 0;
+      z-index: 1050;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      color: #fff;
+      background: var(--header-panel);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 300ms var(--ease-out), visibility 0s linear 300ms;
+   }
+
+.site-menu.is-open
+   {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 300ms var(--ease-out), visibility 0s;
+   }
+
+.site-menu__top
+   {
+      position: relative;
+      display: flex;
+      flex-shrink: 0;
+      height: var(--navbar-h);
+   }
+
+.site-menu__brand
+   {
+      display: flex;
+      align-items: center;
+      height: 100%;
+   }
+
+.site-menu__shortcuts
+   {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      width: 57%;
+      height: 100%;
+      background: var(--header-sunk);
+   }
+
+.site-menu__shortcuts a
+   {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 29.3%;
+      height: 100%;
+      color: #fff;
+      text-decoration: none;
+      border-right: 1px solid var(--budo-line);
+   }
+
+.site-menu__shortcuts a:last-child
+   {
+      border-right: 0;
+   }
+
+.site-menu__shortcuts span
+   {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Besley', serif;
+      font-size: clamp(19px, calc(17.24px + .47vw), 24px);
+      letter-spacing: -.02em;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      transition: text-decoration-color 150ms ease;
+   }
+
+.site-menu__shortcuts .icon
+   {
+      color: var(--budo-rose);
+   }
+
+/* Ivory circle that a deep red fill sweeps across on hover. */
+.site-menu__close
+   {
+      position: absolute;
+      top: calc((var(--navbar-h) - 40px) / 2);
+      right: 60px;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      overflow: hidden;
+      color: var(--header-field);
+      background: var(--header-ivory);
+      border: 1px solid var(--header-ivory);
+      border-radius: 100px;
+      cursor: pointer;
+      transition: color 250ms ease, transform 160ms var(--ease-out);
+   }
+
+.site-menu__close:active
+   {
+      transform: scale(.97);
+   }
+
+.site-menu__close-fill
+   {
+      position: absolute;
+      inset: 0;
+      background: var(--header-deep);
+      border-radius: inherit;
+      transform: translateX(-101%);
+      transition: transform 250ms var(--ease-in-out);
+   }
+
+.site-menu__close .icon
+   {
+      position: relative;
+   }
+
+.site-menu__body
+   {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      padding: 48px 0;
+   }
+
+.site-menu__columns
+   {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+   }
+
+.site-menu__column
+   {
+      padding: 0 24px;
+      border-left: 1px dashed rgba(255, 255, 255, .2);
+   }
+
+.site-menu__column:first-child
+   {
+      padding-left: 0;
+      border-left: 0;
+   }
+
+.site-menu__heading
+   {
+      display: inline-block;
+      margin-bottom: 20px;
+      font-family: 'Besley', serif;
+      font-size: clamp(24px, calc(20px + 1vw), 34px);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -.02em;
+      color: var(--budo-blush-pale);
+      text-decoration: none;
+   }
+
+.site-menu__column ul
+   {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+   }
+
+.site-menu__column li
+   {
+      margin: 0 0 16px;
+   }
+
+.site-menu__column li a
+   {
+      font-size: 16px;
+      line-height: 24px;
+      color: #fff;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      text-underline-offset: 3px;
+      transition: text-decoration-color 150ms ease;
+   }
+
+.site-menu__footer
+   {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 24px;
+      padding-bottom: 40px;
+   }
+
+.site-menu__pills
+   {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+   }
+
+.site-menu__pill
+   {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      font-size: 14px;
+      line-height: 20px;
+      color: #fff;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, .3);
+      border-radius: 100px;
+      transition: background-color 150ms ease, border-color 150ms ease;
+   }
+
+/* Columns follow the panel in one after another. Closing drops the delays so everything leaves together. */
+.site-menu__column, .site-menu__footer
+   {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 300ms var(--ease-out), transform 300ms var(--ease-out);
+   }
+
+.site-menu.is-open .site-menu__column, .site-menu.is-open .site-menu__footer
+   {
+      opacity: 1;
+      transform: translateY(0);
+   }
+
+.site-menu.is-open .site-menu__column:nth-child(1)
+   {
+      transition-delay: 80ms;
+   }
+
+.site-menu.is-open .site-menu__column:nth-child(2)
+   {
+      transition-delay: 130ms;
+   }
+
+.site-menu.is-open .site-menu__column:nth-child(3)
+   {
+      transition-delay: 180ms;
+   }
+
+.site-menu.is-open .site-menu__column:nth-child(4)
+   {
+      transition-delay: 230ms;
+   }
+
+.site-menu.is-open .site-menu__footer
+   {
+      transition-delay: 280ms;
+   }
+
+@media (hover: hover) and (pointer: fine)
+   {
+      .site-menu__shortcuts a:hover span, .site-menu__column li a:hover
+         {
+            text-decoration-color: currentColor;
+         }
+
+      .site-menu__close:hover
+         {
+            color: #fff;
+         }
+
+      .site-menu__close:hover .site-menu__close-fill
+         {
+            transform: translateX(0);
+         }
+
+      .site-menu__pill:hover
+         {
+            background: rgba(255, 255, 255, .08);
+            border-color: rgba(255, 255, 255, .6);
+         }
+   }
+
+/* ===== Responsive ===== */
+
+/* Below desktop the main links live in the Menu panel only. */
+@media (max-width: 1199.98px)
+   {
+      .site-header__nav
+         {
+            display: none;
+         }
+
+      .brand
+         {
+            --lion-h: 46px;
+         }
+
+      .brand__name
+         {
+            font-size: 19px;
+         }
+
+      .site-menu__shortcuts
+         {
+            width: 68%;
+         }
+
+      .site-menu__close
+         {
+            right: 16px;
+         }
+   }
+
+@media (max-width: 991.98px)
+   {
+      .site-header__quick-links
+         {
+            gap: 28px;
+         }
+
+      .site-header__quick-links li:nth-child(-n + 3)
+         {
+            display: none;
+         }
+
+      .site-header__quick-links a
+         {
+            font-size: 14px;
+         }
+
+      .site-header__search
+         {
+            width: 40px;
+            height: 40px;
+            margin: 0 8px 0 0;
+         }
+
+      /* Menu turns into a round icon button here, like the original. */
+      .site-header__menu-button
+         {
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+         }
+
+      .site-header__menu-label
+         {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+         }
+
+      .site-menu__top
+         {
+            flex-direction: column;
+            height: auto;
+            background: var(--header-sunk);
+         }
+
+      .site-menu__brand
+         {
+            height: var(--navbar-h);
+         }
+
+      .site-menu__shortcuts
+         {
+            position: static;
+            flex-direction: column;
+            width: 100%;
+            height: auto;
+         }
+
+      .site-menu__shortcuts a
+         {
+            justify-content: flex-start;
+            width: 100%;
+            padding: 16px var(--gutter);
+            border-right: 0;
+            border-top: 1px solid var(--budo-line);
+         }
+
+      .site-menu__body
+         {
+            align-items: flex-start;
+            padding: 40px 0 16px;
+         }
+
+      .site-menu__columns
+         {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            row-gap: 32px;
+         }
+
+      .site-menu__column:nth-child(odd)
+         {
+            padding-left: 0;
+            border-left: 0;
+         }
+   }
+
+@media (max-width: 575.98px)
+   {
+      .site-header__quick-links
+         {
+            justify-content: flex-start;
+            gap: 14px;
+            overflow-x: auto;
+            scrollbar-width: none;
+         }
+
+      .brand
+         {
+            --lion-h: 40px;
+
+            gap: 10px;
+         }
+
+      .brand__name
+         {
+            font-size: 17px;
+         }
+
+      .brand__est
+         {
+            font-size: 10px;
+         }
+
+      .site-menu__columns
+         {
+            grid-template-columns: minmax(0, 1fr);
+         }
+
+      .site-menu__column
+         {
+            padding: 0;
+            border-left: 0;
+         }
+   }
+
+@media (max-width: 480px)
+   {
+      .site-header__quick-links .icon
+         {
+            display: none;
+         }
+   }
+
+/* Reduced motion keeps the fades (they help you follow what opened) and drops the sliding and sweeping. */
+@media (prefers-reduced-motion: reduce)
+   {
+      .site-header, .site-menu__close-fill
+         {
+            transition: none;
+         }
+
+      .site-header__nav-link::after
+         {
+            opacity: 0;
+            transform: scaleX(1);
+            transition: opacity 150ms ease;
+         }
+
+      .site-header__nav-item:has(:focus-visible) .site-header__nav-link::after
+         {
+            opacity: 1;
+         }
+
+      .site-header__dropdown, .site-header__nav-item:has(:focus-visible) .site-header__dropdown
+         {
+            transform: translateY(12px);
+         }
+
+      .site-search__sheet
+         {
+            opacity: 0;
+            transform: none;
+            transition: opacity 200ms ease;
+         }
+
+      .site-search.is-open .site-search__sheet
+         {
+            opacity: 1;
+            transform: none;
+         }
+
+      .site-menu__column, .site-menu__footer,
+      .site-menu.is-open .site-menu__column, .site-menu.is-open .site-menu__footer
+         {
+            opacity: 1;
+            transform: none;
+            transition: none;
+         }
+
+      .site-header__search, .site-header__menu-button, .site-search__close, .site-menu__close
+         {
+            transition-property: background-color, color;
+         }
+
+      .site-header__search:active, .site-header__menu-button:active, .site-search__close:active, .site-menu__close:active
+         {
+            transform: none;
+         }
+   }
+
+@media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine)
+   {
+      .site-header__nav-item:hover .site-header__nav-link::after
+         {
+            opacity: 1;
+         }
+
+      .site-header__nav-item:hover .site-header__dropdown
+         {
+            transform: translateY(12px);
+         }
+   }
+
+/* Very small phones: shrinking the lockup a touch more so it still fits beside the two buttons. */
+@media (max-width: 374.98px)
+   {
+      .brand
+         {
+            --lion-h: 32px;
+
+            gap: 8px;
+         }
+
+      .brand__name
+         {
+            font-size: 14px;
+         }
+   }

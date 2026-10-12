@@ -1,0 +1,346 @@
+/* Home page hero: campus photos on the right, rotating headline on the left, trees along the bottom. */
+
+.hero
+   {
+      --hero-field: var(--budo-oxblood);
+      --hero-eyebrow: var(--budo-blush);
+      --hero-ivory: var(--budo-ivory);
+
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      min-height: 600px;
+      padding: 0 0 60px;
+      overflow: hidden;
+      background-color: var(--hero-field);
+      background-image: url('../assets/banner-bottom-trees.svg');
+      background-position: bottom;
+      background-repeat: repeat-x;
+      background-size: 100%;
+   }
+
+.hero *, .hero *::before, .hero *::after
+   {
+      box-sizing: border-box;
+   }
+
+.hero__wrapper
+   {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+   }
+
+/* ===== Media ===== */
+
+.hero__media
+   {
+      position: relative;
+      width: 864px;
+      height: 600px;
+      margin-left: auto;
+      border-radius: 20px;
+      overflow: hidden;
+   }
+
+.hero__media-item
+   {
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 800ms ease;
+   }
+
+.hero__media-item.is-active
+   {
+      z-index: 1;
+      opacity: 1;
+   }
+
+/* The photos are bright (white walls, open sky), so the left edge fades into the oxblood field where the headline runs over it. */
+.hero__media-item::after
+   {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border-radius: 20px;
+      background: linear-gradient(90deg, rgb(61 5 11 / .85) 0%, rgb(61 5 11 / .55) 30%, rgb(61 5 11 / 0) 60%);
+   }
+
+.hero__media-item img
+   {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+   }
+
+/* ===== Text ===== */
+
+.hero__content-position
+   {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      z-index: 1;
+      transform: translateY(-50%);
+   }
+
+.hero__content
+   {
+      animation: hero-fade-in-up 1.2s cubic-bezier(.07, .51, .12, 1);
+   }
+
+@media (min-width: 1400px)
+   {
+      .hero__content
+         {
+            width: 66.6667%;
+         }
+   }
+
+.hero__eyebrow
+   {
+      display: block;
+      margin: 0 0 12px;
+      font-family: 'Besley', serif;
+      font-size: clamp(17px, calc(16.29577px + .18779vw), 19px);
+      font-weight: 500;
+      line-height: 1.36;
+      letter-spacing: -.01em;
+      color: var(--hero-eyebrow);
+   }
+
+/* All headlines sit in the same spot so the box keeps the tallest one's height and nothing jumps. */
+.hero__headlines
+   {
+      display: grid;
+   }
+
+.hero__headline
+   {
+      grid-area: 1 / 1;
+      margin: 0;
+      padding: 0 0 28px;
+      font-family: 'Besley', serif;
+      font-size: clamp(36px, calc(24.02817px + 3.19249vw), 70px);
+      font-weight: 500;
+      line-height: 1.13;
+      letter-spacing: -.02em;
+      color: #fff;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 800ms cubic-bezier(.49, 0, .49, 1), visibility 0s linear 800ms;
+   }
+
+.hero__headline.is-active
+   {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 800ms cubic-bezier(.49, 0, .49, 1), visibility 0s;
+   }
+
+@media (min-width: 1200px)
+   {
+      .hero__headline
+         {
+            padding-right: 60px;
+         }
+   }
+
+/* ===== Dots ===== */
+
+.hero__dots-position
+   {
+      position: absolute;
+      bottom: 60px;
+      left: 0;
+      right: 0;
+      z-index: 2;
+   }
+
+.hero__dots
+   {
+      display: flex;
+      align-items: center;
+      margin: 33px 0 0;
+      padding: 0;
+      list-style: none;
+   }
+
+.hero__dots li
+   {
+      margin: 0;
+      padding: 0;
+      line-height: 0;
+   }
+
+.hero__dots button
+   {
+      display: block;
+      width: 32px;
+      height: 6px;
+      margin: 0 4px;
+      padding: 0;
+      border: 0;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, .25);
+      cursor: pointer;
+      transition: background-color 200ms ease;
+   }
+
+.hero__dots li:first-child button
+   {
+      margin-left: 0;
+   }
+
+.hero__dots button:hover
+   {
+      background: rgba(255, 255, 255, .5);
+   }
+
+.hero__dots button.is-active
+   {
+      background: var(--hero-ivory);
+   }
+
+.hero__dots button:focus-visible
+   {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+   }
+
+@keyframes hero-fade-in-up
+   {
+      0%
+         {
+            opacity: 0;
+            transform: translate(0, 40px);
+         }
+
+      100%
+         {
+            opacity: 1;
+            transform: translate(0, 0);
+         }
+   }
+
+/* ===== Responsive ===== */
+
+@media (max-width: 1199.98px)
+   {
+      .hero__media
+         {
+            width: 680px;
+         }
+
+      .hero__dots
+         {
+            flex-wrap: wrap;
+            width: 250px;
+         }
+
+      .hero__dots li
+         {
+            margin-bottom: 10px;
+         }
+   }
+
+/* Below tablet landscape it stacks: video on top, then the text, then the dots. */
+@media (max-width: 991.98px)
+   {
+      .hero
+         {
+            flex-wrap: wrap;
+            min-height: 1px;
+            padding: 10px 0 80px;
+            background-position: 0 bottom;
+            background-size: 120%;
+         }
+
+      .hero__wrapper
+         {
+            flex-wrap: wrap;
+         }
+
+      .hero__wrapper > .container:first-child
+         {
+            margin-bottom: 28px;
+         }
+
+      .hero__media
+         {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            margin-left: 0;
+         }
+
+      /* Stacked, the headline sits under the photo, so there's nothing to fade for. */
+      .hero__media-item::after
+         {
+            content: none;
+         }
+
+      .hero__content-position
+         {
+            position: relative;
+            top: 0;
+            order: 1;
+            transform: none;
+         }
+
+      .hero__dots-position
+         {
+            position: relative;
+            bottom: 0;
+         }
+
+      .hero__dots
+         {
+            width: 100%;
+            margin-top: 24px;
+         }
+
+      .hero__dots button
+         {
+            margin: 0 8px 0 0;
+         }
+   }
+
+@media (max-width: 767.98px)
+   {
+      .hero__headline
+         {
+            line-height: 1.09;
+         }
+   }
+
+@media (max-width: 575.98px)
+   {
+      .hero__media
+         {
+            height: 238px;
+            aspect-ratio: auto;
+         }
+   }
+
+@media (prefers-reduced-motion: reduce)
+   {
+      .hero__content
+         {
+            animation: none;
+         }
+
+      .hero__media-item, .hero__headline, .hero__headline.is-active
+         {
+            transition: none;
+         }
+   }
