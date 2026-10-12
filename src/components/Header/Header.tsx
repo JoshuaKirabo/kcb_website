@@ -21,7 +21,7 @@ const QUICK_LINKS: QuickLink[] =
 
 const NAV: NavItem[] =
   [
-    { label: "About Budo", href: "#", links: ["Our History", "Mission & Values", "Leadership", "Our Staff", "Old Budonians", "Careers"] },
+    { label: "About Budo", href: "#about", links: ["Our History", "Mission & Values", "Leadership", "Our Staff", "Old Budonians", "Careers"] },
     { label: "Academics", href: "#", links: ["Our Approach", "O-Level", "A-Level", "Departments", "Library & Resources"] },
     { label: "Student Life", href: "#", links: ["Boarding Houses", "Chapel", "Clubs & Societies", "Sports", "Music & Drama", "Student Support"] },
     { label: "Admissions", href: "#", links: ["How to Apply", "Fees & Bursaries", "Visit Budo", "Enquire", "Apply"] },

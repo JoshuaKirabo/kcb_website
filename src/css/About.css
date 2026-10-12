@@ -1,0 +1,397 @@
+/* Home page About block: intro heading, a sliding photo beside a still one, a photo hanging off the right edge, then vision + mission. */
+
+.about
+   {
+      --about-field: var(--budo-ivory);
+      --about-text: #21201f;
+      --about-heading: var(--budo-oxblood);
+      --about-eyebrow: var(--budo-ink);
+
+      padding: 96px 0;
+      overflow: hidden;
+      font-size: 20px;
+      line-height: 30px;
+      color: var(--about-text);
+      background: var(--about-field);
+   }
+
+.about *, .about *::before, .about *::after
+   {
+      box-sizing: border-box;
+   }
+
+/* ===== Scroll reveal ===== */
+
+.about-reveal
+   {
+      opacity: 0;
+      transform: translate(0, 40px);
+   }
+
+.about-reveal.is-revealed
+   {
+      animation: about-fade-in-up 1.2s cubic-bezier(.07, .51, .12, 1) both;
+   }
+
+/* ===== Intro ===== */
+
+@media (min-width: 1200px)
+   {
+      .about__intro
+         {
+            width: 66.6667%;
+         }
+   }
+
+.about__eyebrow
+   {
+      display: block;
+      margin-bottom: 20px;
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--about-eyebrow);
+   }
+
+.about__title
+   {
+      margin: 0 0 64px;
+      font-family: 'Besley', serif;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.19;
+      letter-spacing: -.02em;
+      color: var(--about-heading);
+   }
+
+@media (min-width: 375px)
+   {
+      .about__title
+         {
+            font-size: calc(21.66197px + 1.69014vw);
+         }
+   }
+
+@media (min-width: 1440px)
+   {
+      .about__title
+         {
+            font-size: 46px;
+         }
+   }
+
+/* ===== Photos ===== */
+
+.about__grid
+   {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+      column-gap: 24px;
+   }
+
+.about__media
+   {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 59.51fr) minmax(0, 49fr);
+      gap: 16px;
+      align-self: start;
+      margin-bottom: 68px;
+   }
+
+.about__slider, .about__feature
+   {
+      position: relative;
+      height: 392px;
+      border-radius: 16px;
+      overflow: hidden;
+   }
+
+.about__track
+   {
+      display: flex;
+      height: 100%;
+   }
+
+.about__slide
+   {
+      flex: 0 0 100%;
+      height: 100%;
+   }
+
+.about__slide img, .about__feature img, .about__aside-photo
+   {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+   }
+
+/* The lion is a cut-out, so it reads best on the ivory with only its feet over the photo. */
+.about__lion
+   {
+      position: absolute;
+      bottom: -96px;
+      left: -19px;
+      z-index: 1;
+      width: 150px;
+      height: auto;
+      opacity: 0;
+      pointer-events: none;
+   }
+
+.about__lion.is-revealed
+   {
+      animation: about-fade-in-up .6s ease-in .3s both;
+   }
+
+/* The tall photo starts partway down and runs out past the container on the right, the way the original's does. */
+.about__aside
+   {
+      min-height: 562px;
+      padding-top: 137px;
+   }
+
+.about__aside-photo
+   {
+      width: 522px;
+      max-width: none;
+      height: 425px;
+   }
+
+/* ===== Vision + Mission ===== */
+
+.about__values
+   {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      column-gap: 24px;
+   }
+
+.about__value h5
+   {
+      margin: 0 0 20px;
+      font-family: "Google Sans Variable", sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      color: var(--about-eyebrow);
+   }
+
+.about__value p
+   {
+      margin: 0 0 32px;
+   }
+
+.about__value strong
+   {
+      font-weight: 600;
+      color: var(--about-heading);
+   }
+
+.about__cta
+   {
+      grid-column: 1 / -1;
+   }
+
+.about__button
+   {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 115px;
+      padding: 11px 24px;
+      border: 1px solid var(--about-heading);
+      border-radius: 9999px;
+      font-family: "Google Sans Variable", sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      color: #fff;
+      text-decoration: none;
+      background: var(--about-heading);
+      transition: background-color .3s var(--ease-out), border-color .3s var(--ease-out);
+   }
+
+.about__button:hover
+   {
+      border-color: var(--budo-oxblood-deep);
+      background: var(--budo-oxblood-deep);
+   }
+
+.about__button:active
+   {
+      transform: scale(.97);
+   }
+
+.about__button:focus-visible
+   {
+      outline: 2px solid var(--about-heading);
+      outline-offset: 3px;
+   }
+
+@keyframes about-fade-in-up
+   {
+      0%
+         {
+            opacity: 0;
+            transform: translate(0, 40px);
+         }
+
+      100%
+         {
+            opacity: 1;
+            transform: translate(0, 0);
+         }
+   }
+
+/* ===== Responsive ===== */
+
+@media (max-width: 1399.98px)
+   {
+      .about__slider, .about__feature
+         {
+            height: 336px;
+         }
+
+      .about__aside
+         {
+            min-height: 500px;
+         }
+
+      .about__aside-photo
+         {
+            width: 390px;
+            height: 363px;
+         }
+   }
+
+/* Below desktop the side photo drops out and everything runs full width. */
+@media (max-width: 1199.98px)
+   {
+      .about__title
+         {
+            margin-bottom: 32px;
+         }
+
+      .about__grid
+         {
+            grid-template-columns: 1fr;
+         }
+
+      .about__media
+         {
+            margin-bottom: 102px;
+         }
+
+      .about__aside
+         {
+            display: none;
+         }
+
+      .about__values
+         {
+            grid-template-columns: 1fr;
+         }
+
+      .about__lion
+         {
+            bottom: -70px;
+            width: 104px;
+         }
+   }
+
+@media (max-width: 991.98px)
+   {
+      .about
+         {
+            padding: 64px 0;
+         }
+
+      .about__eyebrow
+         {
+            margin-bottom: 12px;
+         }
+
+      .about__title
+         {
+            margin-bottom: 64px;
+         }
+
+      .about__slider, .about__feature
+         {
+            height: 226px;
+         }
+
+      .about__lion
+         {
+            width: 88px;
+         }
+   }
+
+/* Phones stack the two photos, the still one first, with the lion on the slider's bottom corner. */
+@media (max-width: 767.98px)
+   {
+      .about
+         {
+            font-size: 18px;
+            line-height: 27px;
+         }
+
+      .about__title
+         {
+            line-height: 1.21;
+            margin-bottom: 30px;
+         }
+
+      .about__media
+         {
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 54px;
+         }
+
+      .about__slider, .about__feature
+         {
+            height: 280px;
+         }
+
+      .about__feature
+         {
+            order: -1;
+         }
+
+      .about__lion
+         {
+            bottom: -48px;
+            left: -10px;
+            width: 96px;
+         }
+   }
+
+@media (max-width: 575.98px)
+   {
+      .about__slider
+         {
+            height: 231px;
+         }
+   }
+
+@media (prefers-reduced-motion: reduce)
+   {
+      .about-reveal, .about__lion
+         {
+            opacity: 1;
+            transform: none;
+         }
+
+      .about-reveal.is-revealed, .about__lion.is-revealed
+         {
+            animation: none;
+         }
+
+      .about__track
+         {
+            transition: none !important;
+         }
+   }
