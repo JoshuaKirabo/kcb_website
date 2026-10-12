@@ -2,18 +2,16 @@ import { useEffect, useState } from "react";
 import adminBlock from "../../assets/budo/admin-block.jpeg";
 import patriot from "../../assets/budo/patriot.jpg";
 import staff from "../../assets/budo/staff.jpeg";
-import kcb from "../../assets/budo/kcb.jpeg";
 import "../../css/Hero.css";
 
 type Slide = { image: string; alt: string; focus?: string; headline: string };
 
-// Each photo is paired with the headline that shows over it. The admin block leads because it's the one shot that could only be Budo.
+// Each photo is paired with the headline that shows over it. One admin shot only — the angled block with the clock.
 const SLIDES: Slide[] =
   [
     { image: adminBlock, alt: "The administration block at King's College, Budo, with its clock and the lion crest.", headline: "Growing bright minds and big hearts." },
     { image: patriot, alt: "Hundreds of Budo students in uniform gathered on the school grounds.", focus: "center 65%", headline: "Discovering your path in a community that appreciates all of who you are." },
     { image: staff, alt: "Budo staff gathered around the fountain in the school gardens.", headline: "Being more than a school — a place to explore, connect, and become." },
-    { image: kcb, alt: "The front of the administration block under a clear sky.", headline: "Nurturing well-rounded humans through encouragement, purpose, and joy." },
   ];
 
 const AUTOPLAY_MS = 4000;
