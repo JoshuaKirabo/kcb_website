@@ -1,6 +1,6 @@
 :root
    {
-      font-family: 'Inter', system-ui, sans-serif;
+      font-family: "Google Sans Variable", system-ui, sans-serif;
       font-synthesis: none;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
@@ -44,6 +44,11 @@
          {
             --gutter: 16px;
          }
+   }
+
+html
+   {
+      scroll-padding-top: var(--header-h);
    }
 
 body
